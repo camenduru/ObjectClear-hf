@@ -560,4 +560,4 @@ with gr.Blocks(css=custom_css) as demo:
     )
 
 
-demo.launch(debug=True, show_error=True)
+demo.launch(debug=True, show_error=True, share=True)
