@@ -10,7 +10,6 @@ import argparse
 import numpy as np
 import torchvision.transforms.functional as TF
 from scipy.ndimage import convolve, zoom
-import spaces
 from utils import resize_by_short_side
 
 from tools.interact_tools import SamControler
@@ -51,7 +50,6 @@ def get_prompt(click_state, click_input):
     return prompt
 
 # use sam to get the mask
-@spaces.GPU
 def sam_refine(image_state, point_prompt, click_state, evt:gr.SelectData):
     if point_prompt == "Positive":
         coordinate = "[[{},{},1]]".format(evt.index[0], evt.index[1])
@@ -109,7 +107,6 @@ def show_mask(image_state, interactive_state, mask_dropdown):
         
         return select_frame
 
-@spaces.GPU
 def upload_and_reset(image_input, interactive_state):
     click_state = [[], []]
 
@@ -185,7 +182,6 @@ pipe = ObjectClearPipeline.from_pretrained_with_custom_modules(
 
 pipe.to(device)
     
-@spaces.GPU
 def process(image_state, interactive_state, mask_dropdown, guidance_scale, seed, num_inference_steps, strength         
             ):
     generator = torch.Generator(device="cuda").manual_seed(seed)
